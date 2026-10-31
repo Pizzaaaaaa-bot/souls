@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Souls</title>
+<link rel="icon" href="icon.png">
+<style>
+:root{--bg:#07070d;--violet:#8b5cf6;--cyan:#22d3ee;--text:#ececf8;--muted:#8d8da8;--glass:rgba(255,255,255,.05);--glass2:rgba(255,255,255,.09);--line:rgba(255,255,255,.10);--danger:#f87171;--ok:#34d399}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(900px 520px at 50% -12%,rgba(139,92,246,.30),transparent 62%),radial-gradient(700px 420px at 95% 115%,rgba(34,211,238,.16),transparent 60%)}
+#orbs{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+.hidden{display:none!important}
+button,a.btn{font-family:inherit;cursor:pointer;border:0;color:var(--text);text-decoration:none}
+.wrap{position:relative;max-width:1080px;margin:0 auto;padding:0 20px 60px}
+header{display:flex;align-items:center;gap:14px;padding:16px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.2em;font-size:14px;text-transform:uppercase;flex:1;min-width:150px}
+.brand img{width:34px;height:34px;border-radius:10px}
+nav{display:flex;gap:4px;padding:5px;border-radius:40px;background:var(--glass);border:1px solid var(--line);overflow-x:auto}
+nav button{background:none;padding:9px 20px;border-radius:30px;font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--muted);white-space:nowrap;transition:.2s}
+nav button:hover{color:var(--text)}nav button.on{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff}
+.acct{display:flex;align-items:center;gap:10px;flex:1;justify-content:flex-end;min-width:150px}
+.chip{display:flex;align-items:center;gap:9px;padding:4px 12px 4px 4px;border-radius:30px;background:var(--glass);border:1px solid var(--line);font-size:13px}
+.chip img{width:26px;height:26px;border-radius:50%}
+.btn{display:inline-block;padding:13px 22px;border-radius:14px;font-size:13px;font-weight:700;letter-spacing:.12em;transition:.2s}
+.btn.primary{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#fff;box-shadow:0 8px 34px rgba(139,92,246,.4)}
+.btn.primary:hover{transform:translateY(-1px)}
+.btn.ghost{background:var(--glass);border:1px solid var(--line)}.btn.ghost:hover{background:var(--glass2)}
+.btn.sm{padding:8px 14px;font-size:12px;letter-spacing:.05em;border-radius:10px}
+.btn:disabled,.btn.off{opacity:.55;cursor:not-allowed;transform:none}
+.banner{padding:12px 16px;border-radius:12px;font-size:14px;line-height:1.5;border:1px solid var(--line);background:rgba(34,211,238,.10);margin-bottom:14px}
+.banner.warn{background:rgba(250,204,21,.10);border-color:rgba(250,204,21,.4)}.banner.ok{background:rgba(52,211,153,.10);border-color:rgba(52,211,153,.4)}
+.hero{position:relative;border-radius:24px;overflow:hidden;padding:56px 32px;background:linear-gradient(135deg,#1b1233,#0d2a35);border:1px solid var(--line);margin-bottom:20px}
+.hero h1{font-size:clamp(32px,6vw,54px);font-weight:800;margin-bottom:10px}.hero p{color:#c9c9de;font-size:17px;max-width:560px;line-height:1.6;margin-bottom:22px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.panel{background:rgba(20,20,34,.78);border:1px solid var(--line);border-radius:20px;padding:20px;backdrop-filter:blur(8px);margin-bottom:16px}
+.panel h2{font-size:11.5px;letter-spacing:.24em;color:var(--muted);margin-bottom:14px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.ev{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.03);cursor:pointer;transition:.2s}
+.ev:hover{border-color:var(--violet);transform:translateY(-2px)}
+.ev .im{height:150px;background:linear-gradient(135deg,#1b1233,#0d2a35) center/cover}
+.ev .tx{padding:14px 16px}.ev h3{font-size:17px;margin-bottom:4px}
+.tag{display:inline-block;font-size:10.5px;letter-spacing:.1em;padding:3px 9px;border-radius:20px;background:var(--glass2);margin-right:6px}.tag.e{color:var(--cyan)}
+.post{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03);margin-bottom:14px}
+.post img{width:100%;max-height:260px;object-fit:cover;display:block}.post div{padding:16px 18px}
+.post small{font-size:11px;letter-spacing:.12em;color:var(--cyan)}.post h3{font-size:18px;margin:4px 0 8px}.post p{font-size:14.5px;color:#d3d3e6;line-height:1.65;white-space:pre-wrap}
+.detail{display:grid;grid-template-columns:1fr 300px;gap:18px;margin-top:16px}@media(max-width:760px){.detail{grid-template-columns:1fr}}
+.desc{font-size:15px;line-height:1.7;color:#d3d3e6;white-space:pre-wrap}
+.empty{padding:50px 20px;text-align:center;color:var(--muted);line-height:1.8}
+input[type=text]{width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--text);font-size:15px;outline:none;letter-spacing:.08em}
+input[type=text]:focus{border-color:var(--violet)}
+.msg{font-size:13px;margin-top:10px;color:var(--cyan);min-height:18px}.msg.bad{color:var(--danger)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}.thumbs img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:zoom-in}
+.links{display:flex;gap:8px;flex-wrap:wrap}.links a{font-size:12.5px;padding:8px 15px;border-radius:20px;background:var(--glass);border:1px solid var(--line);color:var(--text);text-decoration:none}.links a:hover{border-color:var(--violet)}
+.ip{font-family:Consolas,monospace;color:var(--cyan);font-size:16px}
+footer{text-align:center;color:var(--muted);font-size:12.5px;padding:30px 0 0}
+.modal{position:fixed;inset:0;background:rgba(4,4,10,.8);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}.modal img{max-width:92vw;max-height:88vh;border-radius:14px}
+.sub{font-size:11px;letter-spacing:.2em;color:var(--muted);margin:16px 0 4px}
+.lock{display:inline-flex;gap:8px;align-items:center}
+</style>
+</head>
+<body>
+<canvas id="orbs"></canvas>
+<div class="wrap">
+  <header>
+    <div class="brand"><img src="icon.png" alt=""><span id="bn">SOULS</span></div>
+    <nav id="nav"><button data-t="home" class="on">INICIO</button><button data-t="events">EVENTOS</button><button data-t="news">NOVEDADES</button><button data-t="redeem">CANJEAR</button></nav>
+    <div class="acct"><div id="gbtn"></div><div id="chip" class="chip hidden"><img id="gpic" alt=""><span id="gname"></span><button id="gout" class="btn ghost sm">Salir</button></div></div>
+  </header>
+  <div id="banner" class="banner hidden"></div>
+  <div id="maint" class="banner warn hidden"></div>
+
+  <section id="v-home">
+    <div class="hero"><h1 id="hName">Souls</h1><p id="hTag"></p>
+      <div class="row"><a id="dl" class="btn primary hidden" target="_blank" rel="noopener">DESCARGAR CLIENTE</a><span class="btn ghost off lock" title="Para jugar usa el cliente de escritorio">🔒 JUGAR · solo en el cliente</span></div></div>
+    <div class="panel hidden" id="comm"><h2>COMUNIDAD</h2><div id="ipRow" class="hidden" style="margin-bottom:12px"><span class="muted" style="color:var(--muted);font-size:13px">IP del servidor</span><div class="row"><span class="ip" id="ip"></span><button class="btn ghost sm" id="ipc">Copiar</button></div></div><div class="links" id="links"></div></div>
+    <div class="panel"><h2>ÚLTIMAS NOVEDADES</h2><div id="homeNews"></div></div>
+  </section>
+  <section id="v-events" class="hidden"><div class="grid" id="evGrid"></div><div id="evDetail"></div></section>
+  <section id="v-news" class="hidden"><div id="news" style="max-width:760px;margin:0 auto"></div></section>
+  <section id="v-redeem" class="hidden"><div class="panel" style="max-width:640px;margin:0 auto"><h2>CANJEAR CÓDIGO</h2>
+    <div class="row"><input id="code" type="text" maxlength="24" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false" style="flex:1;min-width:200px"><button id="rd" class="btn primary">CANJEAR</button></div>
+    <div class="msg" id="rmsg"></div><div id="rew"></div></div></section>
+  <footer id="foot"></footer>
+</div>
+<div id="lb" class="modal hidden"><img id="lbi" alt=""></div>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const ls = {get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} }, del: k => { try { localStorage.removeItem(k); } catch (e) {} }};
+let SITE = {}, IDX = {events: [], news: [], mcnews: []}, REW = {early: [], images: [], leaks: []}, cur = null;
+
+// ---- almas de fondo ----
+(function(){const c=$('orbs'),x=c.getContext('2d');let W,H,o=[];const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight};addEventListener('resize',rs);rs();
+const mk=f=>({x:Math.random()*W,y:f?Math.random()*H:H+20,r:1.5+Math.random()*3.5,v:.12+Math.random()*.45,s:Math.random()*6.28,h:Math.random()<.6?262:188});for(let i=0;i<40;i++)o.push(mk(true));
+(function fr(){x.clearRect(0,0,W,H);for(const p of o){p.y-=p.v;p.s+=.01;p.x+=Math.sin(p.s)*.3;if(p.y<-20)Object.assign(p,mk(false));const g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);g.addColorStop(0,`hsla(${p.h},90%,70%,.5)`);g.addColorStop(1,`hsla(${p.h},90%,60%,0)`);x.fillStyle=g;x.beginPath();x.arc(p.x,p.y,p.r*6,0,7);x.fill()}requestAnimationFrame(fr)})()})();
+
+async function getJSON(u) { const r = await fetch(u + (u.includes('?') ? '&' : '?') + 't=' + Date.now()); if (!r.ok) throw new Error(r.status); return r.json(); }
+const post = p => `<article class="post">${p.image ? `<img src="${esc(p.image)}" alt="">` : ''}<div><small>${esc(p.date)}</small><h3>${esc(p.title)}</h3><p>${esc(p.body)}</p></div></article>`;
+
+function tab(t) {
+  for (const b of document.querySelectorAll('nav button')) b.classList.toggle('on', b.dataset.t === t);
+  for (const v of ['home', 'events', 'news', 'redeem']) $('v-' + v).classList.toggle('hidden', v !== t);
+  scrollTo(0, 0);
+}
+for (const b of document.querySelectorAll('nav button')) b.onclick = () => tab(b.dataset.t);
+
+function applySite() {
+  const s = SITE, r = document.documentElement.style;
+  if (s.accent) r.setProperty('--violet', s.accent); if (s.accent2) r.setProperty('--cyan', s.accent2);
+  const name = s.name || 'Souls'; document.title = name; $('bn').textContent = name; $('hName').textContent = name; $('hTag').textContent = s.tagline || '';
+  const b = s.banner || {}; $('banner').className = 'banner ' + (b.level || 'info') + (b.enabled ? '' : ' hidden'); $('banner').textContent = b.text || '';
+  const m = s.maintenance || {}; $('maint').classList.toggle('hidden', !m.enabled); $('maint').textContent = m.message || '';
+  $('dl').classList.toggle('hidden', !s.download_url); if (s.download_url) $('dl').href = s.download_url;
+  const names = {discord: 'Discord', instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube', twitter: 'X / Twitter', web: 'Sitio web'}, L = s.links || {};
+  $('links').innerHTML = Object.keys(L).filter(k => L[k]).map(k => `<a href="${esc(L[k])}" target="_blank" rel="noopener">${names[k] || k}</a>`).join('');
+  $('ipRow').classList.toggle('hidden', !s.server_ip); $('ip').textContent = s.server_ip || '';
+  $('comm').classList.toggle('hidden', !s.server_ip && !$('links').children.length);
+  $('foot').textContent = s.footer || '';
+  $('rd').disabled = s.codes_enabled === false; if (s.codes_enabled === false) $('rmsg').textContent = 'Los códigos están desactivados por ahora.';
+}
+$('ipc').onclick = () => navigator.clipboard.writeText(SITE.server_ip || '');
+for (const el of [$('lb')]) el.onclick = () => el.classList.add('hidden');
+
+function allEvents() { const ids = new Set(IDX.events.map(e => e.id)); return IDX.events.concat(REW.early.filter(e => !ids.has(e.id)).map(e => ({...e, early: true}))); }
+function renderAll() {
+  $('homeNews').innerHTML = IDX.news.length ? IDX.news.slice(0, 3).map(post).join('') : '<div class="empty">Aún no hay novedades.</div>';
+  $('news').innerHTML = (IDX.news.length ? IDX.news.map(post).join('') : '<div class="empty">Aún no hay novedades.</div>') + (IDX.mcnews.length ? '<div class="sub">NOVEDADES DE MINECRAFT</div>' + IDX.mcnews.map(post).join('') : '');
+  const evs = allEvents();
+  $('evGrid').innerHTML = evs.length ? evs.map(e => `<div class="ev" data-id="${esc(e.id)}"><div class="im" style="${e.image ? `background-image:url('${esc(e.image)}')` : ''}"></div><div class="tx"><h3>${esc(e.name)}</h3><span class="tag">MINECRAFT ${esc(e.mc)}</span>${e.forge ? '<span class="tag">CON MODS</span>' : ''}${e.early ? '<span class="tag e">EARLY ACCESS</span>' : ''}</div></div>`).join('') : '<div class="empty" style="grid-column:1/-1">Todavía no hay eventos publicados.</div>';
+  for (const c of $('evGrid').querySelectorAll('.ev')) c.onclick = () => { cur = c.dataset.id; renderDetail(); };
+  renderDetail(); renderRewards();
+}
+function renderDetail() {
+  const e = allEvents().find(x => x.id === cur); if (!e) { $('evDetail').innerHTML = ''; return; }
+  $('evDetail').innerHTML = `<div class="panel detail" style="margin-top:20px"><div><h2>${esc(e.name)}</h2><div class="desc">${esc(e.desc) || '<span style="color:var(--muted)">Sin descripción todavía.</span>'}</div></div>
+    <div><span class="btn ghost off lock" style="width:100%;text-align:center">🔒 JUGAR · solo en el cliente</span><p style="color:var(--muted);font-size:12.5px;margin-top:10px;line-height:1.6">Descarga el cliente de escritorio para jugar este evento.</p></div></div>`;
+}
+function renderRewards() {
+  let h = '';
+  if (REW.images.length) h += `<div class="sub">IMÁGENES PROMOCIONALES</div><div class="thumbs">${REW.images.map(i => `<img src="${i.src}" title="${esc(i.title)}">`).join('')}</div>`;
+  for (const l of REW.leaks) h += `<div class="sub">LEAK</div>` + post(l);
+  $('rew').innerHTML = h;
+  for (const i of $('rew').querySelectorAll('.thumbs img')) i.onclick = () => { $('lbi').src = i.src; $('lb').classList.remove('hidden'); };
+}
+
+// ---- canjear (descifrado en el navegador) ----
+const te = new TextEncoder(), norm = c => String(c).toUpperCase().replace(/[^A-Z0-9]/g, '');
+const hex = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+async function unzip(buf) {
+  const v = new DataView(buf), u8 = new Uint8Array(buf); let e = buf.byteLength - 22;
+  while (e >= 0 && v.getUint32(e, true) !== 0x06054b50) e--;
+  const n = v.getUint16(e + 10, true); let p = v.getUint32(e + 16, true); const out = {};
+  for (let i = 0; i < n; i++) {
+    const meth = v.getUint16(p + 10, true), csz = v.getUint32(p + 20, true), nl = v.getUint16(p + 28, true), el = v.getUint16(p + 30, true), cl = v.getUint16(p + 32, true), off = v.getUint32(p + 42, true);
+    const name = new TextDecoder().decode(u8.slice(p + 46, p + 46 + nl)); p += 46 + nl + el + cl;
+    const lo = off + 30 + v.getUint16(off + 26, true) + v.getUint16(off + 28, true); let d = u8.slice(lo, lo + csz);
+    if (meth === 8) d = new Uint8Array(await new Response(new Blob([d]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+    out[name] = d;
+  }
+  return out;
+}
+async function openReward(code) {
+  const n = norm(code); if (n.length < 8) throw new Error('Escribe el código completo.');
+  const h = hex(await crypto.subtle.digest('SHA-256', te.encode('souls-code:' + n))).slice(0, 40);
+  const r = await fetch('canjes/' + h + '.pack?t=' + Date.now()); if (!r.ok) throw new Error('Código inválido.');
+  const raw = new Uint8Array(await r.arrayBuffer());
+  const km = await crypto.subtle.importKey('raw', te.encode(n), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({name: 'PBKDF2', salt: te.encode('souls-reward-v1'), iterations: 150000, hash: 'SHA-256'}, km, 256);
+  const key = await crypto.subtle.importKey('raw', bits, 'AES-CTR', false, ['decrypt']);
+  const zip = new Uint8Array(await crypto.subtle.decrypt({name: 'AES-CTR', counter: raw.slice(0, 16), length: 128}, key, raw.slice(16)));
+  const files = await unzip(zip.buffer), rw = JSON.parse(new TextDecoder().decode(files['reward.json']));
+  const today = new Date().toISOString().slice(0, 10); if (rw.expires && rw.expires < today) throw new Error('Este código ya venció.');
+  const url = f => f && files[f] ? URL.createObjectURL(new Blob([files[f]])) : '';
+  return {label: rw.label, early: (rw.early || []).map(e => ({...e, image: url(e.image) || e.image})), images: (rw.images || []).map(i => ({title: i.title, src: url(i.file)})).filter(i => i.src),
+    leaks: (rw.leaks || []).map(l => ({...l, image: url(l.image)}))};
+}
+function merge(r) {
+  for (const e of r.early) if (!REW.early.find(x => x.id === e.id)) REW.early.push(e);
+  REW.images.push(...r.images); REW.leaks.push(...r.leaks);
+}
+async function redeem() {
+  const m = $('rmsg'); m.className = 'msg'; m.textContent = 'Comprobando...';
+  try {
+    const code = $('code').value, n = norm(code), saved = JSON.parse(ls.get('souls_codes') || '[]');
+    if (saved.includes(n)) throw new Error('Ya canjeaste este código.');
+    const r = await openReward(code); merge(r); saved.push(n); ls.set('souls_codes', JSON.stringify(saved));
+    m.textContent = `¡Código canjeado!${r.label ? ' ' + r.label + '.' : ''}`; $('code').value = ''; renderAll();
+  } catch (e) { m.className = 'msg bad'; m.textContent = e.message; }
+}
+$('rd').onclick = redeem; $('code').onkeydown = e => { if (e.key === 'Enter') redeem(); };
+
+// ---- Google (opcional) ----
+function showUser(u) { $('chip').classList.toggle('hidden', !u); $('gbtn').classList.toggle('hidden', !!u); if (u) { $('gpic').src = u.picture || 'icon.png'; $('gname').textContent = u.name || u.email; } }
+function initGoogle() {
+  const id = SITE.google_web_client_id; if (!id) return;
+  const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+  s.onload = () => { google.accounts.id.initialize({client_id: id, callback: r => { try { const p = JSON.parse(decodeURIComponent(escape(atob(r.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))))); const u = {name: p.name, email: p.email, picture: p.picture}; ls.set('souls_g', JSON.stringify(u)); showUser(u); } catch (e) {} }}); google.accounts.id.renderButton($('gbtn'), {theme: 'filled_black', shape: 'pill', text: 'signin_with'}); };
+  document.head.appendChild(s);
+}
+$('gout').onclick = () => { ls.del('souls_g'); showUser(null); try { google.accounts.id.disableAutoSelect(); } catch (e) {} };
+
+(async () => {
+  try { SITE = await getJSON('site.json'); } catch (e) { SITE = {}; }
+  applySite(); initGoogle();
+  try { const u = JSON.parse(ls.get('souls_g') || 'null'); showUser(u); } catch (e) { showUser(null); }
+  try { IDX = await getJSON('index.json'); } catch (e) { $('homeNews').innerHTML = '<div class="empty">Aún no hay contenido publicado.</div>'; }
+  for (const c of JSON.parse(ls.get('souls_codes') || '[]')) { try { merge(await openReward(c)); } catch (e) {} }
+  renderAll();
+})();
+</script>
+</body>
+</html>

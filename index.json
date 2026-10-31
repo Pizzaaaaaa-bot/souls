@@ -1,0 +1,20 @@
+{
+  "updated": "2026-10-30 19:08",
+  "events": [],
+  "news": [
+    {
+      "title": "Nueva publicación",
+      "body": "",
+      "date": "2026-10-31",
+      "image": ""
+    }
+  ],
+  "mcnews": [
+    {
+      "title": "Preview 26.70.21.",
+      "body": "Inclusión de Add-on musical oficial: Nueva función integrada en el menú de creación de mundos de Bedrock Preview 26.70.21.\n\nDisco en blanco: Nuevo ítem crafteable con papel y paneles de cristal.\n\nPrensa de discos (Discess): Nuevo bloque crafteable con piedra, cobre, mesa de crafteo y un disco en blanco.\n\nGrabación de música ambiental: Permite guardar 9 pistas musicales del juego (como temas de C418) usando tintes de colores.\n\nTocadiscos de bolsillo: Ítem portátil en 16 colores para guardar, pausar y escuchar discos en cualquier parte del mapa.\n\nCompatibilidad ampliada: El tocadiscos portátil también funciona con los discos musicales tradicionales de Minecraft.",
+      "date": "2026-10-30",
+      "image": "media/e1c650bc_ssBound_HauntsAndHarvest_.net_CarouselHeroMain_2560x932.webp"
+    }
+  ]
+}

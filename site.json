@@ -1,0 +1,31 @@
+{
+  "v": 1,
+  "name": "Souls",
+  "tagline": "",
+  "accent": "#8b5cf6",
+  "accent2": "#22d3ee",
+  "server_ip": "",
+  "footer": "",
+  "links": {
+    "discord": "https://discord.gg/fQg2R869H",
+    "tiktok": "https://www.tiktok.com/@ggsoulstudios"
+  },
+  "banner": {
+    "enabled": false,
+    "text": "",
+    "level": "info"
+  },
+  "maintenance": {
+    "enabled": false,
+    "message": "Estamos en mantenimiento. Vuelve en un rato."
+  },
+  "codes_enabled": true,
+  "google_client_id": "196707091367-vkch162obv9jeue9tdogk4v4e1mc20oi.apps.googleusercontent.com",
+  "google_web_client_id": "",
+  "ms_client_id": "",
+  "download_url": "",
+  "packs_base": "",
+  "site_url": "https://pizzaaaaaa-bot.github.io/souls/",
+  "min_version": "",
+  "updated": "2026-10-30 19:09"
+}
